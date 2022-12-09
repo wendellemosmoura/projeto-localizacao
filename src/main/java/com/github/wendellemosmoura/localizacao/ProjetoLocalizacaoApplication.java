@@ -1,13 +1,18 @@
 package com.github.wendellemosmoura.localizacao;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ProjetoLocalizacaoApplication {
+public class ProjetoLocalizacaoApplication implements CommandLineRunner {
+
+    @Override
+    public void run(String... args) throws Exception {
+        System.out.println("Inicializado!");
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(ProjetoLocalizacaoApplication.class, args);
     }
-
 }
