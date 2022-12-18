@@ -3,10 +3,17 @@ package com.github.wendellemosmoura.localizacao.domain.service;
 import com.github.wendellemosmoura.localizacao.domain.entity.Cidade;
 import com.github.wendellemosmoura.localizacao.domain.repository.CidadeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.github.wendellemosmoura.localizacao.domain.service.CidadeSpecs.habitantesGreatherThan;
+import static com.github.wendellemosmoura.localizacao.domain.service.CidadeSpecs.nomeEqual;
 
 @Service
 public class CidadeService {
@@ -37,7 +44,12 @@ public class CidadeService {
                 .withIgnoreCase()
                 .withStringMatcher(ExampleMatcher.StringMatcher.STARTING);
         Example<Cidade> example = Example.of(cidade, matcher);
-        return  cidadeRepository.findAll(example);
+        return cidadeRepository.findAll(example);
     }
 
+    public void listarCidadesByNomeSpec() {
+        cidadeRepository
+                .findAll(nomeEqual("Rio de Janeiro").or(habitantesGreatherThan(1000)))
+                .forEach(System.out::println);
+    }
 }
